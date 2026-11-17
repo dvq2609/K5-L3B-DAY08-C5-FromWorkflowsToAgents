@@ -15,7 +15,7 @@
 |   2 |  Công  | 2A202603789 |       |        |         |
 |   3 |        |      |       |        |         |
 |   4 |        |      |       |        |         |
-|   5 |        |      |       |        |         |
+|   5 | LeNguyenAnhNhan | 2A202603838 | nguyenanhnhan161@gmail.com | | Task 5 — Đánh giá và đối chiếu |
 
 Gợi ý chia vai:
 
@@ -28,7 +28,9 @@ Gợi ý chia vai:
 
 | Người | Vai | Commit | Test đã thêm hoặc sửa |
 | --- | --- | --- | --- |
-| | | | |
+| LeNguyenAnhNhan — 2A202603838 | Task 5: test biên, benchmark, đối chiếu | Chưa commit — thay bằng hash thật trước nộp | `src/tests/test_task5_rules.py`, `src/tests/test_task5_shapes.py`, `src/tests/test_task5_comparison.py` |
+
+Bằng chứng task 5: [báo cáo đánh giá](report/team/task5_evaluation.md), [bảng benchmark](report/team/task5_comparison.md), [báo cáo cá nhân](report/team/2A202603838_LeNguyenAnhNhan.md). Email: nguyenanhnhan161@gmail.com.
 
 ## Cá nhân
 
