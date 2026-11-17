@@ -38,6 +38,8 @@ Các quyết định kỹ thuật chính:
 
 Commit task 4: [`7b717a2`](https://github.com/dvq2609/K5-L3B-DAY08-C5-FromWorkflowsToAgents/commit/7b717a28af5de404670e74378ec42289e04eb894) (`feat(task4): implement pytest report generation and export to JSON by LNAKhoi`).
 
+Commit task 4 Last Update: c83911138173987ceedf6bcf45d18930b2403dfb (`test(task4): refresh safety evidence and personal report`)
+
 ## 4. Bằng chứng kiểm chứng
 
 Môi trường chạy lại cuối: Python 3.13.12, Windows AMD64 và pytest 8.4.2. Ngày kiểm chứng: 2026-11-18 (GMT+7).
