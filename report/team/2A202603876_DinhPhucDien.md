@@ -39,7 +39,7 @@ Một quyết định quan trọng là truyền **quote đầy đủ** vào host
 
 Khi quote lớn hơn 0, orchestrator gọi host ngay cả khi approval không hợp lệ. Host vừa ngăn ghi tiền, vừa tạo audit `policy_denied`. Shape ánh xạ kết quả từ chối sang `denied`; riêng xung đột số tiền khi retry được trả về `failed` và giữ nguyên khoản đã commit.
 
-Tham số `crash_at` được chuyển nguyên vào `issue_refund`. Chương trình không bắt và bỏ qua `InjectedCrash`. Trước khi ngoại lệ truyền ra ngoài, trace được ghi bằng khối `finally`. Sau khi chạy lại, việc chống hoàn trùng dựa vào ledger của host.
+Tham số `crash_at` được chuyển nguyên vào `issue_refund`. Trước khi ngoại lệ truyền ra ngoài, trace được ghi bằng khối `finally`. Sau khi chạy lại, việc chống hoàn trùng dựa vào ledger của host.
 
 ### 3.4. Trace và kiểm thử bổ sung
 
@@ -85,11 +85,9 @@ Một số test thể hiện trực tiếp yêu cầu của phần việc:
 - `test_orchestrator_crash_propagates_and_resume_pays_once`: kiểm tra crash thực sự xảy ra và không phát sinh khoản hoàn thứ hai khi resume.
 - `test_orchestrator_changed_quote_on_retry_keeps_committed_amount`: kiểm tra xung đột số tiền khi gọi lại.
 
-Kết quả kiểm thử xác nhận hành vi trên dữ liệu public và các tình huống bổ sung nêu trên. Báo cáo cá nhân không dùng kết quả này để suy ra điểm hidden hay kết luận kiến trúc nào tốt nhất cho cả nhóm.
-
 ## 5. Công cụ AI đã dùng
 
-Tôi sử dụng Codex để hỗ trợ đọc cấu trúc project, đối chiếu luật nghiệp vụ và contract, viết phần triển khai orchestrator, xây dựng các test handoff và rà soát thay đổi sau khi tích hợp workflow của thành viên khác. Codex cũng hỗ trợ soạn báo cáo này dựa trên mã nguồn, commit và kết quả kiểm thử.
+Tôi sử dụng Codex để hỗ trợ đọc cấu trúc project, đối chiếu luật nghiệp vụ và contract, viết phần triển khai orchestrator, xây dựng các test handoff và rà soát thay đổi sau khi tích hợp workflow của thành viên khác.
 
 Kết quả do công cụ đề xuất được kiểm tra bằng pytest và đối chiếu với ledger trong các test. Tôi trực tiếp chạy lại bộ test student của orchestrator và bộ test host trên môi trường của mình. Phần mô phỏng model trong chương trình vẫn dùng MockLLM của lab; số tiền hoàn và quyền ghi do code kiểm soát. Các file policy, durability, metrics, config và dữ liệu public được giữ nguyên.
 

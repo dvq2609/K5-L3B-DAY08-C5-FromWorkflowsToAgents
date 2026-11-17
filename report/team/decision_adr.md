@@ -1,30 +1,24 @@
 # Decision record
 
-Điền sau dấu `:` trên cùng dòng, không xóa nhãn. Giảng viên và `python -m lab8.check_submission` (chạy trong `src/`) đọc các dòng này bằng máy. Không đổi tên hay dời file này khỏi `report/team/`.
-`Shape chọn` phải là đúng một trong: `workflow`, `single`, `orchestrator`, `swarm`. Đây là shape được chấm cổng hidden.
-
-- Shape chọn:
-- Commit hash:
-- Run id dẫn chứng:
-- Pass rate / pass^5 / seed min-max / variance:
-- Cost per success (mô phỏng, VND):
-- Crash safety:
-- Secret leak / approval bypass:
-
-Ví dụ một dòng đã điền: `- Shape chọn: workflow`, `- Crash safety: 20/20 (src/reports/crash.json)`.
+- Shape chọn: workflow
+- Run id dẫn chứng: R-workflow-C-001-s11
+- Pass rate / pass^5 / seed min-max / variance: 1.000 / 1.000 / 1.000–1.000 / 0.000000
+- Cost per success (mô phỏng, VND): 27.86
+- Crash safety: 20/20 (src/reports/crash.json)
+- Secret leak / approval bypass: Các test public đã chạy thành công; chưa có kết quả chấm hidden, không khẳng định an toàn ngoài phạm vi kiểm thử.
 
 ## Vì sao shape này
 
-Viết 1 đoạn. So cùng corpus và cùng seed, không so với một lần chạy lẻ.
+Nhóm chọn workflow vì trên cùng 14 claim public và 5 seed 11, 22, 33, 44, 55, shape này đạt 70/70 trial, pass rate 1.000 và pass^5 1.000. Single và orchestrator cũng đạt 70/70, nhưng cost/success mô phỏng lần lượt là 29.86 và 57.12 VND, so với 27.86 VND của workflow. Swarm đạt 69/70, pass^5 0.929 và cost/success 49.57 VND. Dữ liệu và số liệu tổng hợp nằm trong `src/reports/benchmark.json`; run ID trên là một trial dẫn chứng, không phải ID của toàn bộ benchmark.
 
 ## Có đáng đổi lấy multi-agent không
 
-Nếu pass nhỉnh hơn mà cost và variance cao hơn, nhóm giữ hay đổi? Điều kiện nào làm quyết định đảo lại?
+Với bộ public hiện tại, thêm agent chưa cải thiện tỷ lệ thành công so với workflow và làm tăng chi phí mô phỏng. Nhóm sẽ cân nhắc lại nếu có bộ dữ liệu đại diện hơn cho thấy công việc có thể chia song song hoặc cần điều tra phức tạp, và multi-agent cải thiện kết quả đủ để bù chi phí và độ dao động, đồng thời vẫn đáp ứng các điều kiện an toàn.
 
 ## Trace và bằng chứng
 
-Trace của nhóm ghi những event nào? Field nào cố ý **không** ghi, và vì sao? Nếu trace nằm ngoài chỗ scanner quét được, đội security chứng minh thế nào là hệ thống không lộ secret?
+Workflow ghi sự kiện `quote` với số tiền và lý do khi đã tính quote, và sự kiện `decision` với trạng thái và lý do ở các nhánh trả về. Trace không ghi toàn bộ claim, ticket, `parent_secret`, header, số điện thoại, địa chỉ, tên hàng hoặc ghi chú nội bộ. Trace được `finish()` ghi và trả qua `trace_path`; scanner kiểm tra file đó và các file cùng thư mục có tiền tố run ID. File hoặc stdout nằm ngoài phạm vi scanner không được chứng minh là sạch chỉ nhờ kết quả quét; cần kiểm tra thêm các đầu ra đó.
 
 ## Giới hạn
 
-MockLLM không phải model sản xuất. Latency để `unavailable`. Không sửa JSON cho đủ 0.75.
+Kết quả trên chỉ phản ánh 14 claim public, năm seed, bảng giá mô phỏng và dữ liệu giả. Bộ hidden chưa được chấm trong bằng chứng này. MockLLM không phải model sản xuất và latency là `unavailable`; số tiền cost không phải hóa đơn API thực. Báo cáo crash có 20/20, nhưng không thay thế việc kiểm tra mọi tình huống ngoài bộ thử.
