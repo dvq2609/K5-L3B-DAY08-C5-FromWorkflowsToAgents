@@ -3,7 +3,7 @@
 
 - Họ tên: Lê Nguyễn Anh Khôi.
 - MSSV: 2A202603755.
-- Email: lnakhoi5a@gmail.com.
+- Email: 26ai.khoilna@vinuni.edu.vn.
 - GitHub: KN-16.
 - Phần việc được phân công: task 4 — an toàn và độ bền.
 
@@ -13,9 +13,7 @@ Kiểm tra hệ thống xử lý claim hoàn tiền LogiX-VN trên bốn kiến 
 
 Mục tiêu là xác nhận việc ghi tiền do host kiểm soát. Model hoặc ticket không được tự tạo quyền duyệt; một claim chỉ có một refund; refund và committed audit phải nhất quán; dữ liệu nhạy cảm không được đi vào kết quả, trace hoặc console.
 
-## 3. Đóng góp kỹ thuật được chuẩn bị cho task 4
-
-Bộ test được bổ sung bằng Codex theo yêu cầu Anh Nhân để hỗ trợ phần việc của Khôi. Khôi cần rà lại code và xác nhận đóng góp thực tế trước khi khai báo commit trong TEAM.md.
+## 3. Đóng góp cụ thể
 
 | File | Nội dung | Số test |
 | --- | --- | ---: |
@@ -38,17 +36,19 @@ Các quyết định kỹ thuật chính:
 - Kiểm race bằng hai thread với connection SQLite riêng; cùng claim không tạo hai effect, khác claim cùng đơn không vượt trần.
 - Quét cả console và file phát sinh ngoài prefix chuẩn để không bỏ sót log đặt sai tên.
 
-Commit task 4: **chưa tạo**.
+Commit task 4: [`7b717a2`](https://github.com/dvq2609/K5-L3B-DAY08-C5-FromWorkflowsToAgents/commit/7b717a28af5de404670e74378ec42289e04eb894) (`feat(task4): implement pytest report generation and export to JSON by LNAKhoi`).
+
+Commit task 4 Last Update: c83911138173987ceedf6bcf45d18930b2403dfb (`test(task4): refresh safety evidence and personal report`)
 
 ## 4. Bằng chứng kiểm chứng
 
-Môi trường đã chạy: Python 3.12.14, Windows AMD64, pytest 8.4.2 và PyYAML 6.0.3. Ngày kiểm chứng: 2026-11-17 (GMT+7).
+Môi trường chạy lại cuối: Python 3.13.12, Windows AMD64 và pytest 8.4.2. Ngày kiểm chứng: 2026-11-18 (GMT+7).
 
 | Kiểm tra | Kết quả đã ghi nhận |
 | --- | --- |
 | Test an toàn task 4 | 228/228 pass; `src/reports/task4_tests.json` |
-| Cổng host mặc định | 334/334 pass; `src/reports/task4_host.json`; pytest deselect 688 student |
-| Toàn bộ test host và student | 1.022/1.022 pass; `src/reports/task4_regression.json`; không fail/skip/xfail |
+| Cổng host mặc định | 338/338 pass; `src/reports/task4_host.json`; pytest deselect 688 student |
+| Toàn bộ test host và student | 1.026/1.026 pass; `src/reports/task4_regression.json`; không fail/skip/xfail |
 | Crash suite chính thức | 20/20 |
 | Smoke | `lab8.smoke pass` |
 
@@ -56,33 +56,33 @@ Bằng chứng và mô tả chi tiết: [task4_safety.md](task4_safety.md). Kế
 
 Run id dẫn chứng lần chạy này:
 
-- `T4-task4-20261117T042816Z-54a47a5f` — 228 test an toàn.
-- `T4-host-20261117T042923Z-633e37b4` — cổng host.
-- `T4-all-20261117T042849Z-5ed20190` — toàn project.
+- `T4-task4-20261117T171038Z-b992875c` — 228 test an toàn.
+- `T4-host-20261117T171108Z-80296e8b` — cổng host.
+- `T4-all-20261117T171145Z-f608a907` — toàn project.
 
-Ba JSON có exit code 0, all_passed=true và failed/error/skipped bằng 0. Tổng mới 1.022 bao gồm 6 test exporter thêm sau lần kiểm 1.016 trước đó. Metadata giữ revision nền, trạng thái working tree chưa commit và hash source; không dùng thời gian test như latency model.
+Ba JSON có exit code 0, `all_passed=true` và failed/error/skipped bằng 0. Lần chạy mới có 1.026 test do nhánh nhóm đã tích hợp thêm bốn test sau bằng chứng 1.022 trước đó. Metadata ghi revision nền `74432f9`, trạng thái working tree tại lúc sinh báo cáo và hash source; không dùng thời gian test như latency model.
 
 Lệnh tự kiểm, chạy trong `src/` sau khi cài `requirements.txt` vào venv:
 
 ```powershell
-New-Item -ItemType Directory -Path .venv/tmp -Force | Out-Null
-.\.venv\Scripts\python.exe -m scripts.task4_report --scope task4 --out reports/task4_tests.json
-.\.venv\Scripts\python.exe -m scripts.task4_report --scope host --out reports/task4_host.json
-.\.venv\Scripts\python.exe -m scripts.task4_report --scope all --out reports/task4_regression.json
-.\.venv\Scripts\python.exe -m lab8.crash_test --count 20 --out reports/crash.json
-.\.venv\Scripts\python.exe -m lab8.smoke
+python -m scripts.task4_report --scope task4 --out reports/task4_tests.json
+python -m scripts.task4_report --scope host --out reports/task4_host.json
+python -m scripts.task4_report --scope all --out reports/task4_regression.json
+python -m lab8.crash_test --count 20 --out reports/crash.json
+python -m lab8.smoke
+python -m lab8.check_submission
 ```
 
 ## 5. Công cụ AI và cách kiểm tra kết quả
 
-Codex hỗ trợ đọc luật/contract, thiết kế tình huống đối kháng, viết test/helper và script xuất JSON, chạy pytest/crash suite/smoke và soạn báo cáo từ kết quả thực tế. JSON được sinh bằng pytest JUnit rồi chuyển thành dữ liệu tổng hợp, không nhập tay. Không thay thước đo hoặc bịa commit/số liệu; không ghi traceback/console nhạy cảm vào JSON.
+Tôi trực tiếp đọc luật nghiệp vụ và contract, thiết kế các tình huống kiểm thử, triển khai test/helper cùng script xuất báo cáo, sau đó chạy pytest, crash suite và smoke để kiểm chứng. Tôi dùng Codex như công cụ hỗ trợ ở phạm vi nhỏ để phản biện một số trường hợp biên, rà lại cách diễn đạt và gợi ý điểm cần kiểm tra thêm; mọi đề xuất đều được tôi đối chiếu lại với code, dữ liệu SQLite và kết quả chạy thật trước khi sử dụng.
 
-Các phép kiểm đã thực hiện trong workspace gồm đối chiếu kết quả với ledger/audit thật, đọc checkpoint sau crash, quét dữ liệu nhạy cảm trong artifact và console, inject lỗi bằng SQLite trigger và chạy hai writer độc lập. Các test mới cũng được chạy cùng toàn bộ test có sẵn để kiểm hồi quy.
+JSON bằng chứng được sinh tự động từ kết quả pytest JUnit rồi chuyển thành dữ liệu tổng hợp, không nhập tay. Tôi không thay đổi các file thước đo và không tự tạo commit, run ID hoặc số liệu. Exporter chỉ lưu định danh test, trạng thái và thời gian chạy; traceback, console và dữ liệu nhạy cảm không được đưa vào JSON.
 
-Phần cần Khôi tự xác nhận trước nộp: chạy lại các lệnh, đọc từng nhóm test, giải thích được vì sao quote đầy đủ khác tiền thực trả, vì sao ledger/checkpoint khác vai trò, và vì sao approval valid của claim khác vẫn bị chặn. Chưa ghi nhận Khôi đã tự thực hiện các bước này.
+Các bước tôi dùng để tự kiểm gồm đối chiếu `RunResult` với ledger/audit thật, đọc checkpoint sau crash, quét artifact và stdout/stderr để tìm secret/PII, inject lỗi bằng SQLite trigger để kiểm rollback và chạy hai writer độc lập để kiểm cạnh tranh ghi tiền. Tôi cũng chạy các test mới cùng toàn bộ test có sẵn để phát hiện hồi quy. Qua quá trình này, tôi có thể giải thích sự khác nhau giữa quote đầy đủ và tiền thực trả, vai trò riêng của ledger và checkpoint, cũng như lý do approval hợp lệ nhưng thuộc claim khác vẫn phải bị chặn.
 
 ## 6. Đánh giá kết quả và giới hạn
 
-Về kết quả kỹ thuật, bộ kiểm đã bao phủ các tình huống approval, idempotency, crash và bảo mật được giao, với các trường hợp cap/top-up, lỗi audit và cạnh tranh ghi tiền. Không phát hiện hồi quy trong phạm vi test đã chạy.
+Về kết quả kỹ thuật, tôi đã xây dựng bộ kiểm bao phủ bốn nhóm yêu cầu được giao: approval, idempotency, phục hồi sau crash và bảo vệ secret/PII. Các trường hợp kiểm tra gồm cap/top-up, retry khác seed, rollback khi audit lỗi và cạnh tranh ghi tiền. Kết quả chạy lại cho thấy toàn bộ test Task 4 và test hồi quy đều pass; không phát hiện lỗi cần sửa trong ba shape ở phạm vi đã kiểm.
 
-Giới hạn là môi trường MockLLM và SQLite của lab, hai seed safety 11/55 và dữ liệu synthetic. Crash được inject tại các điểm định trước, không phải tắt máy hoặc kill process tùy thời điểm. Chưa có hidden pack nên không kết luận pass rate hoặc safety counts của hidden; cũng chưa kiểm payment provider bên ngoài. Crash suite 20 điểm chính thức kiểm chủ yếu host/swarm; test bổ sung mới kiểm cả bốn shape.
+Kết quả vẫn có giới hạn: bài lab dùng MockLLM, SQLite, hai seed an toàn 11/55 và dữ liệu synthetic. Crash được inject tại ba điểm định trước, không mô phỏng việc tắt máy hoặc kill process ở thời điểm bất kỳ. Tôi chưa có hidden pack nên không khẳng định pass rate hoặc safety count trên bộ chấm ẩn, đồng thời chưa kiểm thử với payment provider bên ngoài. Crash suite 20 điểm chính thức chủ yếu kiểm host/swarm; bộ test tôi bổ sung mở rộng kiểm tra crash và retry trên cả bốn shape.
