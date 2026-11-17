@@ -12,26 +12,25 @@
 
 ## Thành viên
 
-| STT | Họ tên | MSSV | Email | GitHub | Vai trò |
-| --: | ------ | ---- | ----- | ------ | ------- |
-|   1 | Quyến  | 2A202603769 |       |        |         |
-|   2 |  Công  | 2A202603789 |       |        |         |
-|   3 |        |      |       |        |         |
-|   4 |        |      |       |        |         |
-|   5 |        |      |       |        |         |
-
-Gợi ý chia vai:
-
-- Nhóm 6 người: integration; workflow; single agent; orchestrator; ledger/policy/crash; eval/report.
-- Nhóm 4 người: workflow + integration; single; orchestrator + handoff; ledger + evaluation.
+| STT | Họ tên              | MSSV        | Email                                                            | GitHub       | Vai trò                               |
+| --: | --------------------- | ----------- | ---------------------------------------------------------------- | ------------ | -------------------------------------- |
+|   1 | Quyến                | 2A202603769 | [26ai.quyendv2@vinuni.edu.vn](mailto:26ai.quyendv2@vinuni.edu.vn) | dvq2609      | workflow                               |
+|   2 | Công                 | 2A202603789 | [26ai.congnt3@vinuni.edu.vn](mailto:26ai.quyendv2@vinuni.edu.vn)  | congnt180263 | single agent                           |
+|   3 | Đinh Phúc Diên     | 2A202603876 | 26ai.diendp@vinuni.edu.vn                                        | dinhphucdien179             | Task 3 — Orchestrator, handoff và kiểm thử tích hợp |
+|   4 | Lê Nguyễn Anh Khôi | 2A202603755 |                                                                  |              | Task 4 — An toàn và độ bền       |
+|   5 | LeNguyenAnhNhan       | 2A202603838 | nguyenanhnhan161@gmail.com                                       |              | Task 5 — Đánh giá và đối chiếu |
 
 ## Bảng đóng góp
 
 `python -m lab8.check_submission` đọc bảng này bằng máy: giữ nguyên tiêu đề `## Bảng đóng góp` và các cột. Mỗi người một dòng: commit có nội dung và ít nhất một test đã thêm hoặc sửa.
 
-| Người | Vai | Commit | Test đã thêm hoặc sửa |
-| --- | --- | --- | --- |
-| | | | |
+| Người               | Vai                                           | Commit                                                                                                                                                                                                                                                                        | Test đã thêm hoặc sửa                                                                                                                                        |
+| --------------------- | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Đồng Văn Quyến    | workflow                                      | dda1beb                                                                                                                                                                                                                                                                       | tests/test\_workflow\_extra.py                                                                                                                                    |
+| Nguyễn Thành Công  | Single agent                                  | [**feat(single-agent): complete shape B react loop and add react unit tests**](https://github.com/dvq2609/K5-L3B-DAY08-C5-FromWorkflowsToAgents/commit/d28abb772bdc3bba41fb103650cfe77cca3a6a8f "feat(single-agent): complete shape B react loop and add react unit tests") | test/test\_single\_react.py                                                                                                                                       |
+| Đinh Phúc Diên | Task 3: triển khai orchestrator; handoff chỉ đọc; trace; xử lý approval, crash và retry qua host; báo cáo cá nhân và tích hợp | [`a27e3c9`](https://github.com/dvq2609/K5-L3B-DAY08-C5-FromWorkflowsToAgents/commit/a27e3c9a7792a8fb16cc57976746ba7beeb0bc21) (code và test); `31628d8` (báo cáo cá nhân); `a67e869` (thông tin thành viên) | [src/tests/test_orchestrator_handoff.py](src/tests/test_orchestrator_handoff.py) — 13 trường hợp; kiểm tra shape bằng 62 test public có sẵn trong `src/tests/test_public_matrix.py` |
+| LeNguyenAnhNhan       | Task 5: test biên, benchmark, đối chiếu   | Chưa commit — thay bằng hash thật trước nộp                                                                                                                                                                                                                            | `src/tests/test_task5_rules.py`, `src/tests/test_task5_shapes.py`, `src/tests/test_task5_comparison.py`                                                     |
+| Lê Nguyễn Anh Khôi | Task 4: approval, idempotency, crash, privacy | Chưa commit — ghi hash thật sau khi xác nhận đóng góp                                                                                                                                                                                                                 | `src/tests/test_task4_authorization.py`, `src/tests/test_task4_durability.py`, `src/tests/test_task4_privacy.py`, `src/tests/test_task4_report_export.py` |
 
 ## Cá nhân
 

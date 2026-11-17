@@ -1,11 +1,13 @@
 # Báo cáo cá nhân — 2A202603838_LeNguyenAnhNhan
 
+**Lab 8 — From Workflows to Agents: LogiX-VN**
+
 ## 1. Thông tin thành viên
 
-- Họ tên theo thông tin cung cấp: LeNguyenAnhNhan (Anh Nhân).
+- Họ tên: Lê Nguyễn Anh Nhân.
 - MSSV: 2A202603838.
-- Email: nguyenanhnhan161@gmail.com.
-- GitHub: chưa cung cấp.
+- Email: 26ai.nhanlna@vinuni.edu.vn.
+- GitHub: ying684.
 
 ## 2. Phần việc phụ trách
 
