@@ -46,7 +46,9 @@ Môi trường đã chạy các kết quả trên dùng Python 3.14.3, trong khi
 
 ## 6. Tổng hợp đóng góp
 
-Chi tiết vai trò, commit và test của từng thành viên được ghi trong [TEAM.md](../../TEAM.md); mỗi thành viên có báo cáo cá nhân trong `report/team/`. Nhóm cần bổ sung đầy đủ thông tin và bằng chứng của tất cả thành viên trước khi nộp.
+Chi tiết vai trò, commit và test của từng thành viên được ghi trong [TEAM.md](../../TEAM.md); mỗi thành viên có báo cáo cá nhân trong `report/team/`.
+
+**Đinh Phúc Diên (2A202603876)** phụ trách kiến trúc C. Triển khai `orchestrator.py`, thiết lập handoff chỉ cấp tool đọc cho investigator, tính quote từ dữ liệu đơn hàng và chuyển quote đầy đủ cho host kiểm tra approval, trần hoàn theo đơn và ghi refund. Phần triển khai cũng xử lý trace ở các nhánh trả về, ghi trace khi crash và giữ nguyên cơ chế idempotency của host khi chạy lại. Bổ sung `tests/test_orchestrator_handoff.py` với 13 trường hợp kiểm thử về handoff, rò rỉ dữ liệu, claim/đơn không hợp lệ, approval, ba điểm crash và xung đột số tiền khi retry. Shape được kiểm tra bằng 62 test student public; benchmark chung ghi nhận orchestrator đạt 70/70 trial. Code và test nằm trong commit `a27e3c9`; báo cáo cá nhân được thêm ở `31628d8`, thông tin thành viên được cập nhật ở `a67e869`. Phân tích chi tiết và khai báo sử dụng AI nằm trong [báo cáo cá nhân của Diên](2A202603876_DinhPhucDien.md).
 
 ## 7. Hạn chế và hướng cải thiện
 
