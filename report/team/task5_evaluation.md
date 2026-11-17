@@ -1,14 +1,14 @@
 # Task 5 — Đánh giá và đối chiếu
 
-- Thành viên: LeNguyenAnhNhan (Anh Nhân), MSSV `2A202603838`.
-- Email: nguyenanhnhan161@gmail.com.
+- Thành viên: Lê Nguyễn Anh Nhân, MSSV `2A202603838`.
+- Email: 26ai.nhanlna@vinuni.edu.vn; GitHub: ying684.
 - Ngày kiểm chứng: 2026-11-17 (GMT+7).
-- Code nền sau tích hợp: `340469524960230dc5857a4e8e2623ed84b635af`; phần task 5 hiện trong working tree, chưa commit.
+- Code nền ở lần benchmark ban đầu: `340469524960230dc5857a4e8e2623ed84b635af`. Phần task 5 đã commit tại `fc6128a`; bản tương ứng trong lịch sử nhóm là `a18fcd6`, có cùng bốn file Python. Các commit tích hợp/thông tin của Nhân: `d1faaa7`, `3e4522a`.
 - Trạng thái: **hoàn tất đánh giá task 5 sau tích hợp task 1–3**. Quyết định ADR và hồ sơ nộp chung do cả nhóm chốt.
 
 ## Đóng góp và phạm vi
 
-Thêm ba file test riêng và script chuyển JSON benchmark thành Markdown. Không sửa workflow, single, orchestrator, host, grader, config hoặc dữ liệu public. Đã kiểm tra checkout và `origin/main` cùng ở `3404695`, bao gồm workflow, single và orchestrator đã triển khai. Tất cả số liệu cuối bên dưới lấy trên bản đã tích hợp này.
+Thêm ba file test riêng và script chuyển JSON benchmark thành Markdown. Không sửa workflow, single, orchestrator, host, grader, config hoặc dữ liệu public. Lần benchmark ban đầu dùng bản `3404695`, bao gồm workflow, single và orchestrator đã triển khai. Bảng kiểm bên dưới lưu kết quả ở mốc này; các lần kiểm sau khi bổ sung test khác được ghi riêng.
 
 | File | Mục đích |
 | --- | --- |
@@ -50,6 +50,8 @@ Môi trường: Python 3.12.14 / Windows AMD64; pytest 8.4.2; PyYAML 6.0.3. Đã
 | Tái lập benchmark | Chạy hai lần trên revision hiện tại; JSON giống từng byte |
 
 Mỗi shape pass 110 test tích hợp task 5 và 62 test student gốc; swarm bao gồm các negative control. Tổng cộng hai bộ host/student có 788 test pass, trong đó 465 test được thêm ở task 5. Đã chạy lại tất cả test bằng một lệnh ở lần rà cuối để xác nhận tổng này.
+
+Sau khi tích hợp thêm task 4 và test workflow, lần rà báo cáo ngày 17/11/2026 trên nhánh `LeNguyenAnhNhan` dùng Python 3.12.14 ghi nhận 465 test task 5 và 1.026 test toàn project pass. Có một cảnh báo quyền ghi pytest cache, không có test thất bại. JSON hồi quy task 4 lưu lần kiểm trước đó với 1.022 test pass; không thay số liệu bên trong JSON để làm khớp với lần chạy mới.
 
 SHA-256 benchmark cuối là `09930c572cd5534d350a9ca1b7f40ccef8411380102e72d7dcd9717e700ae96e` và được ghi tự động trong bảng so sánh. Lần rà cuối chạy benchmark/crash vào thư mục tạm và so hash: cả hai khớp từng byte với bằng chứng trong `src/reports/`. Log phát triển và checklist riêng đã được dọn; giữ kết quả tổng hợp, JSON chính thức và lệnh tái lập.
 
@@ -94,9 +96,9 @@ Trước nộp, commit code/bằng chứng theo quy trình nhóm, lấy hash th�
 1. Task 5 đã hoàn tất test biên, kiểm tích hợp, benchmark bốn shape, đối chiếu tái lập và phân tích/đề xuất. Nếu sau này shape thay đổi thì chạy lại các lệnh trên và sinh lại bảng.
 2. Kết quả và bảng hiện tại đủ để đưa vào mục 4 báo cáo nhóm; tham chiếu `task5_comparison.md` thay vì nhập số bằng tay.
 3. Ghép bằng chứng task 4 về approval và secret; cùng nhóm điền ADR, research card/ablation, báo cáo nhóm. Không dùng `check_submission` thay bộ test nghiệp vụ.
-4. Bổ sung commit hash thật vào TEAM/báo cáo cá nhân. Thành viên tự viết phần tự đánh giá và tự kiểm lời giải thích AI trước nộp.
-5. Code ba shape, test và hai file benchmark/crash đã có. ADR và research card còn là mẫu chưa điền; cần phần quyết định/nghiên cứu chung trước khi toàn repo đạt `0 FAIL`. Phần này không phải lỗi của test task 5.
-6. Đã dọn spec/checklist và log phát triển riêng theo yêu cầu Anh Nhân. Giữ code, test, script tái tạo bảng, báo cáo và bằng chứng benchmark/crash cần nộp. Chưa commit/push.
+4. Đã bổ sung commit hash thật của Nhân vào TEAM/báo cáo cá nhân. Commit chốt bài nộp của cả nhóm vẫn cần cập nhật khi hoàn tất hồ sơ.
+5. ADR đã chọn workflow, research card đã điền R4 và nêu rõ chưa có ablation một biến. Không coi benchmark hiện tại là bằng chứng về tác động riêng của topology.
+6. Đã dọn spec/checklist và log phát triển riêng theo yêu cầu Anh Nhân. Code/test và báo cáo task 5 đã có trong lịch sử Git; các chỉnh sửa đối chiếu báo cáo lần này chưa commit/push.
 
 ## Nguồn
 

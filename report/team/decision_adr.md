@@ -1,6 +1,7 @@
 # Decision record
 
 - Shape chọn: workflow
+- Commit hash: fc6128a2dca3dd628519a5b0bcc948eaa7d1099f (commit task 5 chứa code/test và JSON bằng chứng; benchmark được chạy trên code nền 3404695). Bản code/test task 5 tương ứng trong lịch sử nhóm: a18fcd61bebcaef0692cacc09b646d81d634a620.
 - Run id dẫn chứng: R-workflow-C-001-s11
 - Pass rate / pass^5 / seed min-max / variance: 1.000 / 1.000 / 1.000–1.000 / 0.000000
 - Cost per success (mô phỏng, VND): 27.86
