@@ -4,7 +4,7 @@
 
 - Tên nhóm: C5
 - Thành viên và phân công: xem [TEAM.md](../../TEAM.md).
-- Commit code được ghi trong [decision_adr.md](decision_adr.md): `3404695`; nhóm cần cập nhật cả hai file sau khi commit code, test và bằng chứng cuối cùng.
+- Commit dẫn chứng trong [decision_adr.md](decision_adr.md): `fc6128a` chứa code/test task 5 và JSON benchmark/crash; bản task 5 tương ứng trong lịch sử nhóm là `a18fcd6`. Benchmark ban đầu chạy trên code nền `3404695`. Các hash này là bằng chứng cho kết quả, chưa thay cho commit chốt bài nộp cuối của nhóm.
 
 ## 2. Mục tiêu và cách tiếp cận
 
@@ -34,7 +34,9 @@ Benchmark dùng 14 claim public, seed `11,22,33,44,55`, MockLLM và bảng giá 
 | Orchestrator | 1.000 | 1.000 | 1.000–1.000 | 0.000000 | 57.12 | 4.36 / 5 |
 | Swarm | 0.986 | 0.929 | 0.929–1.000 | 0.000816 | 49.57 | 2.80 / 3 |
 
-Swarm có một trial trả `resolved` thay vì `denied`. Báo cáo [crash.json](../../src/reports/crash.json) ghi `20/20`; suite gồm các tình huống crash/resume cùng kiểm tra conflict, thiếu approval và crash của swarm. Nhóm cũng đã chạy 248 test student và 75 test mặc định thành công sau khi tích hợp; số test mặc định có thể thay đổi khi thêm test.
+Swarm có một trial trả `resolved` thay vì `denied`: `R-swarm-C-002-s55`. Báo cáo [crash.json](../../src/reports/crash.json) ghi `20/20`; suite gồm các tình huống crash/resume cùng kiểm tra conflict, thiếu approval và crash của swarm.
+
+Phần task 5 thêm 465 test, gồm 20 test luật, 440 test tích hợp và 5 test tạo bảng. Lần rà lại trên nhánh Anh Nhân ngày 17/11/2026 ghi nhận 465 test task 5 và 1.026 test toàn project pass. Có một cảnh báo quyền ghi pytest cache, không có test thất bại. [JSON hồi quy task 4](../../src/reports/task4_regression.json) lưu lần chạy trước đó với 1.022 test pass; số 788 trong báo cáo đánh giá task 5 là mốc trước khi bổ sung task 4. Các mốc này được phân biệt theo lần kiểm chứng, không gộp thành kết quả của cùng một revision.
 
 Nhóm chọn **workflow**: trên bộ public, shape này đạt 70/70 trial và chi phí mô phỏng thấp nhất. Chi tiết xem [decision_adr.md](decision_adr.md). [Research card R4](research_card.md) nêu giới hạn của so sánh: các shape còn khác nhau về lời gọi model và cách xử lý, nên chưa thể quy chênh lệch riêng cho topology; ablation một biến vẫn cần thực hiện.
 
@@ -42,13 +44,13 @@ Nhóm chọn **workflow**: trên bộ public, shape này đạt 70/70 trial và 
 
 Ticket có thể đưa thông tin sai hoặc yêu cầu bỏ qua policy. Nhóm sử dụng dữ liệu order và policy có cấu trúc để tính tiền, giới hạn tool của investigator và không đưa ticket thô vào trace. Một trường hợp cần chú ý khác là đơn đã hoàn trước đó: shape vẫn gửi quote đầy đủ, để host tính phần còn được hoàn và ghi audit khi từ chối.
 
-Môi trường đã chạy các kết quả trên dùng Python 3.14.3, trong khi đề yêu cầu Python 3.11–3.13. Nhóm cần chạy lại bộ kiểm tra trên phiên bản được hỗ trợ trước khi nộp để xác nhận tính tương thích.
+Các JSON task 4 đang lưu ghi Python 3.12.14, pytest 8.4.2. Lần rà lại task 5 và toàn project ngày 17/11/2026 cũng dùng Python 3.12.14, nằm trong khoảng 3.11–3.13 của đề. Khi chạy ở máy khác, cần ghi phiên bản và giữ riêng kết quả của từng lần chạy.
 
 ## 6. Tổng hợp đóng góp
 
 Chi tiết vai trò, commit và test của từng thành viên được ghi trong [TEAM.md](../../TEAM.md); mỗi thành viên có báo cáo cá nhân trong `report/team/`.
 
-**Đinh Phúc Diên (2A202603876)** phụ trách kiến trúc C. Triển khai `orchestrator.py`, thiết lập handoff chỉ cấp tool đọc cho investigator, tính quote từ dữ liệu đơn hàng và chuyển quote đầy đủ cho host kiểm tra approval, trần hoàn theo đơn và ghi refund. Phần triển khai cũng xử lý trace ở các nhánh trả về, ghi trace khi crash và giữ nguyên cơ chế idempotency của host khi chạy lại. Bổ sung `tests/test_orchestrator_handoff.py` với 13 trường hợp kiểm thử về handoff, rò rỉ dữ liệu, claim/đơn không hợp lệ, approval, ba điểm crash và xung đột số tiền khi retry. Shape được kiểm tra bằng 62 test student public; benchmark chung ghi nhận orchestrator đạt 70/70 trial. Code và test nằm trong commit `a27e3c9`; báo cáo cá nhân được thêm ở `31628d8`, thông tin thành viên được cập nhật ở `a67e869`. Phân tích chi tiết và khai báo sử dụng AI nằm trong [báo cáo cá nhân của Diên](2A202603876_DinhPhucDien.md).
+Lê Nguyễn Anh Nhân (2A202603838) phụ trách đánh giá và đối chiếu: thêm 465 test task 5, script tạo bảng từ benchmark JSON, phân tích lỗi swarm ở seed 55 và đề xuất workflow. Commit gốc là `fc6128a`, bản task 5 trong lịch sử nhóm là `a18fcd6`; `d1faaa7` tích hợp main và `3e4522a` đồng bộ thông tin. Hai commit task 5 có cùng bốn file Python, không tính trùng số test. Chi tiết tại [báo cáo cá nhân của Nhân](2A202603838_LeNguyenAnhNhan.md).
 
 ## 7. Hạn chế và hướng cải thiện
 

@@ -11,33 +11,59 @@
 
 ## 2. Phần việc phụ trách
 
-Task 5 — đánh giá và đối chiếu: test policy cũ/tương lai, ticket sai lệch và trần hoàn theo đơn; chạy benchmark bốn shape, phân tích và soạn bảng so sánh.
+Tôi phụ trách task 5: viết test cho các trường hợp biên, chạy benchmark bốn shape và tổng hợp số liệu để nhóm chọn kiến trúc. Phần kiểm tra tập trung vào policy cũ hoặc chưa có hiệu lực, thông tin sai trong ticket và trần hoàn tiền theo đơn. Phân công này thống nhất với [TEAM.md](../../TEAM.md).
 
 ## 3. Đóng góp cụ thể
 
-- Thêm `src/tests/test_task5_rules.py`: 20 test độc lập, đáp án tính từ luật.
-- Thêm `src/tests/test_task5_shapes.py`: 440 test tích hợp (22 ca × bốn shape × năm seed).
-- Thêm `src/tests/test_task5_comparison.py`: 5 test cho việc tạo bảng và bảo toàn JSON đầu vào.
-- Thêm `src/scripts/task5_comparison.py`: tạo bảng Markdown, ghi hash nguồn và run id dẫn chứng.
-- Chạy benchmark chính thức sau tích hợp task 1–3, đối chiếu lần chạy lại giống byte; phân tích và đề xuất workflow tại `task5_evaluation.md`.
-- Quyết định kỹ thuật: không skip/xfail stub; tách hai negative control swarm khỏi kết quả đúng nghiệp vụ; giữ proposal đầy đủ và kiểm ledger/audit thật.
-- Commit phần task 5: **chưa tạo**; thay bằng hash thật trước nộp. Commit nền được đánh giá là `340469524960230dc5857a4e8e2623ed84b635af` (đã đủ ba shape nhóm).
+Phần code task 5 gồm bốn file:
+
+| File | Nội dung |
+| --- | --- |
+| `src/tests/test_task5_rules.py` | 20 test luật nghiệp vụ, hiệu lực policy và giới hạn số tiền |
+| `src/tests/test_task5_shapes.py` | 440 test tích hợp: 22 tình huống × bốn shape × năm seed |
+| `src/tests/test_task5_comparison.py` | 5 test kiểm bảng báo cáo và việc giữ nguyên JSON đầu vào |
+| `src/scripts/task5_comparison.py` | Đọc JSON benchmark, tạo bảng Markdown kèm hash và run id dẫn chứng |
+
+Đáp án test được viết từ luật nghiệp vụ, không lấy kết quả của hàm đang kiểm để làm đáp án. Các ca hoàn tiền kiểm cả `proposal_amount`, tiền thực ghi trong ledger và audit. Ví dụ, quote 150.000 VND với khoản hoàn trước đó 30.000 VND phải giữ proposal 150.000 và chỉ ghi thêm 120.000.
+
+Hai ca ticket nói quá/nói thiếu số ngày ở seed 55 được dùng để chỉ ra điểm yếu cố ý của swarm. Test xanh ở hai ca đối chứng này nghĩa là đã phát hiện đúng lỗi dự kiến, không phải swarm xử lý đúng nghiệp vụ. Các shape nhóm viết vẫn phải đáp ứng đáp án đúng; không dùng skip/xfail để bỏ qua lỗi.
+
+Các commit liên quan, đều có author `ying684`:
+
+| Commit | Nội dung |
+| --- | --- |
+| [`fc6128a`](https://github.com/dvq2609/K5-L3B-DAY08-C5-FromWorkflowsToAgents/commit/fc6128a2dca3dd628519a5b0bcc948eaa7d1099f) | Commit task 5 ban đầu: code, 465 test, báo cáo và JSON benchmark/crash |
+| [`a18fcd6`](https://github.com/dvq2609/K5-L3B-DAY08-C5-FromWorkflowsToAgents/commit/a18fcd61bebcaef0692cacc09b646d81d634a620) | Bản đưa phần code/test/báo cáo task 5 vào lịch sử nhóm; author là Nhân, committer là Khôi. Bốn file Python giống bản `fc6128a`, không tính thành đóng góp mới lần hai |
+| [`d1faaa7`](https://github.com/dvq2609/K5-L3B-DAY08-C5-FromWorkflowsToAgents/commit/d1faaa71fb9ecfb9a9713feb70313f92b56289f6) | Tích hợp `main` vào nhánh cá nhân, nhận thay đổi của các thành viên |
+| [`3e4522a`](https://github.com/dvq2609/K5-L3B-DAY08-C5-FromWorkflowsToAgents/commit/3e4522ae50a0e4faea6709ca62708cd5d4bfced0) | Đồng bộ `TEAM.md` và cập nhật thông tin trong báo cáo cá nhân |
+
+Commit `3404695` là bản code nền được dùng khi chạy benchmark sau tích hợp task 1–3, không phải commit đóng góp của tôi.
 
 ## 4. Bằng chứng
 
-- [Báo cáo đánh giá và lệnh tái lập](task5_evaluation.md).
-- [Bảng benchmark sinh tự động](task5_comparison.md), nguồn `src/reports/benchmark.json`.
-- Host gate sau tích hợp: 100 pass; test luật/renderer mới: 25 pass.
-- Toàn bộ student: 688 pass; riêng test tích hợp task 5 có 440 pass. Không có fail/skip/xfail. Test xanh bao gồm các negative control của swarm, không nghĩa swarm đúng trên mọi trial benchmark.
-- Crash CLI chính thức: 20/20; file `src/reports/crash.json`.
-- Lần rà cuối: `python -m pytest -q -o addopts= --basetemp=.venv/tmp/final-task5-review --tb=short` cho 788 pass. Benchmark và crash chạy lại khớp từng byte với JSON bằng chứng. Đã dọn log tạm/spec/checklist riêng; lệnh tái lập và kết quả được giữ trong báo cáo đánh giá.
+Benchmark dùng cùng 14 claim public và năm seed `11,22,33,44,55`, tổng cộng 280 trial. Số liệu từ [benchmark.json](../../src/reports/benchmark.json), được tổng hợp trong [bảng so sánh](task5_comparison.md):
+
+| Shape | Trial pass | Pass^5 | Cost/success mô phỏng (VND) |
+| --- | ---: | ---: | ---: |
+| Workflow | 70/70 | 1.000 | 27.86 |
+| Single | 70/70 | 1.000 | 29.86 |
+| Orchestrator | 70/70 | 1.000 | 57.12 |
+| Swarm | 69/70 | 0.929 | 49.57 |
+
+Trial swarm sai là `R-swarm-C-002-s55`: ticket nói trễ 5 ngày trong khi order chỉ trễ 2 ngày. Workflow đạt cùng độ đúng với single/orchestrator nhưng chi phí mô phỏng thấp hơn. Từ kết quả này, phần task 5 đề xuất workflow; [ADR](decision_adr.md) và [báo cáo nhóm](group_report.md) cũng đã chọn workflow. Run id dẫn chứng trong ADR là `R-workflow-C-001-s11`.
+
+Ngày 17/11/2026, lần rà lại trong workspace dùng Python 3.12.14 cho **465 test riêng task 5 pass** và **1.026 test toàn project pass**. Có một cảnh báo không ghi được pytest cache do quyền thư mục; không có test thất bại. Con số 788 trong báo cáo đánh giá task 5 là lần kiểm ban đầu, trước khi bổ sung task 4 và test khác; JSON hồi quy task 4 lưu lần chạy 1.022 test. Đây là các mốc khác nhau, không phải ba số của cùng một lần chạy.
+
+[Crash suite](../../src/reports/crash.json) đạt 20/20. Đây là bằng chứng an toàn chung, không tính thành test riêng task 5. Lệnh tái lập và lần đối chiếu benchmark/crash giống từng byte được ghi trong [task5_evaluation.md](task5_evaluation.md).
 
 ## 5. Công cụ AI đã dùng
 
-Codex hỗ trợ đọc repo/phân công, viết spec/plan/tasks, đề xuất ca biên, tạo test và script báo cáo, chạy kiểm chứng. Kết quả được kiểm bằng pytest, evaluator chính thức đối chiếu ledger/audit/trace, benchmark CLI và chạy lại so byte/hash JSON. Không sửa thước đo hoặc nhập tay JSON để đạt ngưỡng.
+Tôi sử dụng Codex để hỗ trợ tìm hiểu code, gợi ý các trường hợp biên, viết test và script tổng hợp kết quả. Các ca kiểm thử bám theo luật nghiệp vụ và contract của lab; kết quả được kiểm chứng bằng pytest, đối chiếu với ledger, audit và trace.
 
-Trước nộp, thành viên cần tự chạy lại và giải thích được: policy có hiệu lực, ticket không quyết định tiền, proposal khác effect, vì sao top-up không trừ hai lần, và vì sao test negative control xanh không phải swarm đúng. Chưa ghi nhận thành viên đã tự thực hiện bước này.
+Số liệu trong báo cáo lấy từ JSON do công cụ của lab tạo ra, không sửa thước đo hoặc nhập tay kết quả. AI là công cụ hỗ trợ trong quá trình làm bài; tôi chịu trách nhiệm về nội dung và kết quả của phần task 5.
 
 ## 6. Tự đánh giá
 
-**Chờ thành viên tự điền** sau khi đọc code, chạy lại kiểm chứng và tích hợp kết quả nhóm. Không dùng AI để bịa phần tự đánh giá.
+Về phần việc được giao, task 5 đã có test biên, benchmark đủ bốn shape, bảng so sánh và phân tích để nhóm ra quyết định. Điểm cần giữ rõ là proposal khác số tiền thực trả, và test đối chứng xanh không đồng nghĩa swarm đúng trên mọi trial.
+
+Hạn chế chính là bộ public chỉ có 14 claim, MockLLM và giá đều mô phỏng. Kết quả 100% trên public chưa chứng minh đạt ngưỡng hidden. Benchmark cũng thay đổi cả cách gọi model/tool giữa các shape, nên chưa thể kết luận riêng tác động của topology. Như research card của nhóm đã nêu, cần thêm ablation có kiểm soát và dữ liệu độc lập nếu muốn kết luận rộng hơn.
